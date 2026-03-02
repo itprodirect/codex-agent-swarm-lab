@@ -7,4 +7,9 @@ build/
 *.egg-info/
 .env
 importtime*.txt
+
+# local agent configs
 .claude/
+
+# local run artifacts
+runs/
