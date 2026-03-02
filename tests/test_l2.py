@@ -32,5 +32,6 @@ def test_l2_is_deterministic(tmp_path: Path, monkeypatch) -> None:
 
     assert r1 == r2
     rd = tmp_path / "runs" / "test"
-    assert (rd / "plan.json").read_text(encoding="utf-8") == (rd /
-                                                              "plan.json").read_text(encoding="utf-8")
+    assert (rd / "plan.json").read_text(encoding="utf-8") == (rd / "plan.json").read_text(
+        encoding="utf-8"
+    )

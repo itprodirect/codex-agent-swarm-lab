@@ -1,10 +1,9 @@
 from __future__ import annotations
 
 import argparse
+import json
 
 from agent_lab import __version__
-
-import json
 from agent_lab.l2_swarm import run_l2
 
 
@@ -18,9 +17,7 @@ def _maybe_load_dotenv() -> None:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    p = argparse.ArgumentParser(
-        prog="agent-lab", description="Swarm ladder CLI (L0)."
-    )
+    p = argparse.ArgumentParser(prog="agent-lab", description="Swarm ladder CLI (L0).")
     p.add_argument(
         "--version",
         action="store_true",

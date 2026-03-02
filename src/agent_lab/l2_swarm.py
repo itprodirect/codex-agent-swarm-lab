@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any
 
 from .artifacts import run_dir, workspace_dir, write_json, write_text
 
@@ -12,7 +12,7 @@ class PlanStep:
     id: str
     role: str
     action: str
-    acceptance: List[str]
+    acceptance: list[str]
 
 
 @dataclass(frozen=True)
@@ -20,9 +20,9 @@ class Plan:
     level: str
     run_id: str
     task: str
-    constraints: Dict[str, Any]
-    steps: List[PlanStep]
-    acceptance: List[str]
+    constraints: dict[str, Any]
+    steps: list[PlanStep]
+    acceptance: list[str]
 
 
 def coordinator_make_plan(*, task: str, run_id: str) -> Plan:
@@ -53,7 +53,7 @@ def coordinator_make_plan(*, task: str, run_id: str) -> Plan:
 
 
 def plan_to_markdown(plan: Plan) -> str:
-    lines: List[str] = []
+    lines: list[str] = []
     lines.append(f"# {plan.level} Plan")
     lines.append("")
     lines.append(f"- run_id: `{plan.run_id}`")
@@ -78,7 +78,7 @@ def plan_to_markdown(plan: Plan) -> str:
     return "\n".join(lines)
 
 
-def implementer_execute_step(*, plan: Plan, step: PlanStep) -> Dict[str, Any]:
+def implementer_execute_step(*, plan: Plan, step: PlanStep) -> dict[str, Any]:
     ws = Path(plan.constraints["allowed_write_root"])
     ws.mkdir(parents=True, exist_ok=True)
 
@@ -88,14 +88,13 @@ def implementer_execute_step(*, plan: Plan, step: PlanStep) -> Dict[str, Any]:
 
     checks = [
         {"name": "hello_exists", "ok": target.exists()},
-        {"name": "hello_content", "ok": target.read_text(
-            encoding="utf-8") == expected},
+        {"name": "hello_content", "ok": target.read_text(encoding="utf-8") == expected},
     ]
 
     return {"step_id": step.id, "ok": all(c["ok"] for c in checks), "checks": checks}
 
 
-def run_l2(*, task: str, run_id: str) -> Dict[str, Any]:
+def run_l2(*, task: str, run_id: str) -> dict[str, Any]:
     rd = run_dir(run_id)
     ws = workspace_dir(run_id)
     rd.mkdir(parents=True, exist_ok=True)
